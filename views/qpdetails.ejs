@@ -8,29 +8,38 @@
     <title>Document</title>
 </head>
 <body class="p-0 m-0 h-screen">
+    <div>
+        <header class="h-24 content-center bg-[#0B4619] p-8">
+            <div class="font-extrabold">
+                <span class="m-8 bg-clip-text text-transparent text-5xl bg-gradient-to-r from-pink-500 to-violet-500">
+                    QUIZZELA
+                </span>
+            </div>
+        </header>
+    </div>
     <div class="flex flex-row h-screen">
-        <div class="flex flex-col basis-1/4 bg-orange-600 h-screen p-5 justify-between">
+        <div class=" text-2xl text-white flex flex-col basis-1/4 bg-[#116530] h-screen p-5 justify-between">
             <div class="flex flex-col">
                 <div>
-                    <span class="text-slate-200 font-medium text-2xl">Question Paper Name:</span>
+                    <span class="text-gray-300 font-medium text-2xl">Question Paper Name:</span>
                 </div>
                 <div class="mb-5">
                     <span><%= qpdata.name %></span>
                 </div>
                 <div>
-                    <span class="text-slate-200 font-medium text-2xl">Description:</span>
+                    <span class="text-gray-300 font-medium text-2xl">Description:</span>
                 </div>
                 <div class="mb-5">
                     <span><%= qpdata.description %></span>
                 </div>
                 <div>
-                    <span class="text-slate-200 font-medium text-2xl">Total time till now:</span>
+                    <span class="text-gray-300 font-medium text-2xl">Total time till now:</span>
                 </div>
                 <div class="mb-5">
                     <span><%= totalTime %></span>
                 </div>
                 <div>
-                    <span class="text-slate-200 font-medium text-2xl">Maximum marks till now:</span>
+                    <span class="text-gray-300 font-medium text-2xl">Maximum marks till now:</span>
                 </div>
                 <div class="mb-5">
                     <span><%= totalMarks %></span>
@@ -39,23 +48,25 @@
             <div>
                 <div id="testLink" class="p-2 m-1 rounded-md bg-slate-200 text-slate-800 w-full"></div>
             </div>
-        </div>
-        <div class="flex flex-col basis-3/4 bg-slate-200 overflow-scroll items-center">
-            <div class="w-5/6 flex flex-col items-center">
-                <div class="border-2 border-black rounded-md h-max p-5">
+        </div> 
+        <!-- CSS done till here -->
+        <div class="flex flex-col basis-3/4 bg-[#D3E4CD] overflow-scroll items-center">
+            <div class="w-5/6 flex flex-col items-center ">
+                <div class="border-2 border-[#146356] rounded-xl h-max p-5 m-8 w-max ">
                     <% if(update){ %>
-                        <form action="/updatequestion" method="post">
+                        <div class="flex space-x-4">
+                        <form action="/updatequestion" method="post" >
                             <div class="mb-4 hidden">
-                                <label for="">Qpname</label><input type="text" name="qpname" value="<%= qpdata.name %>"><br>
+                                <label for="" class="text-[#064635] font-semibold">Qpname</label><input type="text" name="qpname" value="<%= qpdata.name %>"><br>
                             </div>
                             <div class="mb-4">
-                                <label for="">Question Name</label><input type="text" name="qname" value="<%= uqdata.qname %>"><br>
+                                <label for="" class="text-[#064635] font-semibold">Question Name</label><input type="text" name="qname" value="<%= uqdata.qname %>"><br>
                             </div>
                             <div class="mb-4">
-                                <label for="">Question</label><textarea name="question" id="" cols="70" rows="2"><%= uqdata.question %></textarea><br>
+                                <label for="" class="text-[#064635] font-semibold resize-none">Question</label><textarea name="question" id="" cols="70" rows="2"><%= uqdata.question %></textarea><br>
                             </div>
                             <div class="mb-4">
-                                <label for="">Type of question</label>
+                                <label for="" class="text-[#064635] font-semibold">Type of question</label>
                                 <select name="type" id="">
                                     <option value="<%= uqdata.type %>" selected disabled hidden><%= uqdata.type %></option>
                                     <option value="MCQ">MCQ</option>
@@ -63,62 +74,65 @@
                                 </select><br>
                             </div>
                             <div class="mb-4">
-                                <label for="">Upload Image(if any)</label><input name="image" type="file"><br>
+                                <label for="" class="text-[#064635] font-semibold">Upload Image(if any)</label><input name="image" type="file"><br>
                             </div>
                             <div class="mb-4">
-                                <label for="">Marks:</label><input name="marks" type="number" value="<%= uqdata.marks %>"><br>
+                                <label for="" class="text-[#064635] font-semibold">Marks:</label><input name="marks" type="number" value="<%= uqdata.marks %>"><br>
                             </div>
                             <div class="mb-4">
-                                <label for="">Time</label><input name="qtime" type="number" value="<%= uqdata.qtime %>"><br>
+                                <label for="" class="text-[#064635] font-semibold">Time</label><input name="qtime" type="number" value="<%= uqdata.qtime %>"><br>
                             </div>
                             <div class="mb-4">
-                                <label for="">Correct Option</label><input value="<%= uqdata.answer %>" name="answer" type="text">
+                                <label for="" class="text-[#064635] font-semibold">Correct Option</label><input value="<%= uqdata.answer %>" name="answer" type="text">
                                 <!-- <label for="">Solution</label><input name="answer" type="text" name="" id=""><br> -->
                             </div>
-                            <button class="bg-orange-600 text-white rounded-md p-2" type="submit">Update Question</button>
+                            <button class="text-white ring-2 ring-[#9A86A4] rounded-lg h-10 w-40 transition ease-in-out delay-150 bg-[#7D1E6A] hover:-translate-y-1 hover:scale-110 hover:bg-[#46244C] duration-300"" type="submit">Update Question</button>
                         </form>
+                    </div>
                     <% }else{ %>
+                        <div class="flex space-x-4">
                         <form action="/addquestion" method="post">
                             <div class="mb-4 hidden">
-                                <label for="">Qpname</label><input type="text" name="qpname" value="<%= qpdata.name %>"><br>
+                                <label for="" class="text-[#064635] font-semibold">Qpname</label><input type="text" name="qpname" value="<%= qpdata.name %>"><br>
                             </div>
                             <div class="mb-4">
-                                <label for="">Question Name</label><input type="text" name="qname"><br>
+                                <label for="" class="text-[#064635] font-semibold">Question Name</label><input type="text" name="qname"><br>
                             </div>
                             <div class="mb-4">
-                                <label for="">Question</label><textarea name="question" id="" cols="70" rows="2"></textarea><br>
+                                <label for="" class="text-[#064635] font-semibold resize-none">Question</label><textarea name="question" id="" cols="70" rows="2"></textarea><br>
                             </div>
                             <div class="mb-4">
-                                <label for="">Type of question</label>
+                                <label for="" class="text-[#064635] font-semibold">Type of question</label>
                                 <select name="type" id="">
                                     <option value="MCQ">MCQ</option>
                                     <option value="Descriptive">Descriptive</option>
                                 </select><br>
                             </div>
                             <div class="mb-4">
-                                <label for="">Upload Image(if any)</label><input name="image" type="file"><br>
+                                <label for="" class="text-[#064635] font-semibold">Upload Image(if any)</label><input name="image" type="file"><br>
                             </div>
                             <div class="mb-4">
-                                <label for="">Marks:</label><input name="marks" type="number"><br>
+                                <label for="" class="text-[#064635] font-semibold">Marks:</label><input name="marks" type="number"><br>
                             </div>
-                            <div class="mb-4">
+                            <div class="mb-4 text-[#064635] font-semibold">
                                 <label for="">Time</label><input name="qtime" type="number"><br>
                             </div>
-                            <div class="mb-4">
+                            <div class="mb-4 text-[#064635] font-semibold">
                                 <label for="">Correct Option</label><input name="answer" type="text">
                                 <!-- <label for="">Solution</label><input name="answer" type="text" name="" id=""><br> -->
                             </div>
-                            <button class="bg-orange-600 text-white rounded-md p-2" type="submit">Add Question</button>
+                            <button class="text-white ring-2 ring-[#9A86A4] rounded-lg h-10 w-40 transition ease-in-out delay-150 bg-[#7D1E6A] hover:-translate-y-1 hover:scale-110 hover:bg-[#46244C] duration-300" type="submit">Add Question</button>
                         </form>
+                    </div>
                     <% } %>
                 </div>
             </div>
             <% qdata.forEach(function(ques){ %>
-                <div class="w-1/2 justify-center grid grid-cols-3 border-2 rounded-md border-black mt-2 mb-2">
-                    <div class="col-span-1">Question Name</div><div class="col-span-2"><%= ques.qname %></div>
-                    <div class="col-span-1">Question</div><div class="col-span-2"><%= ques.question %></div>
-                    <div><button class="rounded-md bg-green-600 p-2 m-2 text-white" onclick="window.location = ('/qp/'+ `<%= qpdata.name %>`+ '/' + `<%= ques.qname %>`+'/edit') ;">Edit</button>
-                        <button class="rounded-md bg-red-600 p-2 m-2 text-white" onclick="window.location = ('/qp/'+ `<%= qpdata.name %>`+ '/' + `<%= ques.qname %>`+'/delete') ;">Delete</button>
+                <div class="w-1/2 justify-center grid grid-cols-3 border-2 border-[#146356] rounded-xl h-max p-5 m-8 w-max mt-2 mb-2">
+                    <div class="col-span-1 text-[#064635] font-semibold">Question Name</div><div class="col-span-2"><%= ques.qname %></div>
+                    <div class="col-span-1 text-[#064635] font-semibold">Question</div><div class="col-span-2"><%= ques.question %></div>
+                    <div class="grid grid-cols-2"><button class="ring-2 ring-[#95CD41] rounded-md bg-green-600 hover:-translate-y-1 hover:scale-110 hover:bg-[#116530] duration-300 p-2 m-2 text-white w-20 " onclick="window.location = ('/qp/'+ `<%= qpdata.name %>`+ '/' + `<%= ques.qname %>`+'/edit') ;">Edit</button>
+                        <button class="ring-2 ring-[#FF1700] rounded-md bg-red-600  hover:-translate-y-1 hover:scale-110 hover:bg-[#B33030] duration-300 p-2 m-2 text-white w-20" onclick="window.location = ('/qp/'+ `<%= qpdata.name %>`+ '/' + `<%= ques.qname %>`+'/delete') ;">Delete</button>
                     </div>
                 </div>
 
