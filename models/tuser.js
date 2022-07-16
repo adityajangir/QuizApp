@@ -11,7 +11,9 @@ const tuserSchema = new mongoose.Schema({
     testname:{
         type: String,
     },
-    solution: [{ type: Schema.Types.ObjectId, ref: 'Story' }],
+    totalscore: {
+        type: Number,
+    }
 })
 
 const Tuserinfo = mongoose.model('tuserinfo',tuserSchema)
