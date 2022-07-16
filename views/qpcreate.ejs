@@ -4,29 +4,39 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com/"></script>
     <title>New QP</title>
 </head>
-<body>
+<body class="bg-[#116530]">
     <div>
+        <header class="h-24 content-center bg-[#0B4619] p-8">
+            <div class="font-extrabold">
+                <span class="m-8 bg-clip-text text-transparent text-5xl bg-gradient-to-r from-pink-500 to-violet-500">
+                    QUIZZELA
+                </span>
+            </div>
+        </header>
+    </div>
+    <div class=" text-2xl md:flex md:justify-center mb-6">
         <% if(update){ %>
-            <form action="/updateqp" method="post">
-                <label for="">Name of qp:</label>
-                <input name="name" type="text" value="<%= qpdata.name %>"><br>
-                <label for="">Time of qp:</label>
-                <input name="totaltime" type="number" value="<%= qpdata.totaltime %>"><br>
-                <label for="">Discription for qp</label>
-                <textarea name="description" id="" cols="30" rows="10"><%= qpdata.description %></textarea><br>
-                <button>Submit</button>
+            <form action="/updateqp" method="post" class="h-screen flex flex-col items-center justify-center">
+                <label for="" class="text-gray-300">Name of Quiz:</label>
+                <input name="name" type="text" value="<%= qpdata.name %>" class="w-64 rounded-lg bg-lime-600 ring-2 ring-[#0B4619]"><br>
+                <label for="" class="text-gray-300">Duration of Quiz:</label>
+                <input name="totaltime" type="number" value="<%= qpdata.totaltime %>" class="w-64 rounded-lg bg-lime-600 ring-2 ring-[#0B4619]"><br>
+                <label for="" class="text-gray-300">Description for Quiz</label>
+                <textarea name="description" id="" cols="30" rows="10" class="resize-none h-40 space-y-4 rounded-lg bg-lime-600 ring-2 ring-[#0B4619]"><%= qpdata.description %></textarea><br>
+                <button class=" text-white ring-2 ring-[#9A86A4] rounded-lg h-12 w-40 transition ease-in-out delay-150 bg-[#7D1E6A] hover:-translate-y-1 hover:scale-110 hover:bg-[#46244C] duration-300">Submit</button>
             </form>
         <% }else{ %>
-        <form action="/addqp" method="post">
-            <label for="">Name of qp:</label>
-            <input name="name" type="text"><br>
-            <label for="">Time of qp:</label>
-            <input name="totaltime" type="number"><br>
-            <label for="">Discription for qp</label>
-            <textarea name="description" id="" cols="30" rows="10"></textarea><br>
-            <button>Submit</button>
+        <form action="/addqp" method="post" class="h-screen flex flex-col items-center justify-center">
+            <label for="" class="text-gray-300">Name of Quiz:</label>
+            <input name="name" type="text" class="w-64 space-y-4 rounded-lg bg-lime-600 ring-2 ring-[#0B4619]" ><br>
+            <label for="" class="text-gray-300">Duration of Quiz:</label>
+            <input name="totaltime" type="number" class="w-64 space-y-4 rounded-lg bg-lime-600 ring-2 ring-[#0B4619]"><br>
+            <label for="" class="text-gray-300">Description for Quiz</label>
+            <textarea name="description" id="" cols="30" rows="10" class="resize-none h-40 space-y-4 rounded-lg bg-lime-600 ring-2 ring-[#0B4619]"></textarea><br>
+            <button  class=" text-white ring-2 ring-[#9A86A4] rounded-lg h-12 w-40 transition ease-in-out delay-150 bg-[#7D1E6A] hover:-translate-y-1 hover:scale-110 hover:bg-[#46244C] duration-300">Submit</button>
         </form>
         <% } %>
     </div>
