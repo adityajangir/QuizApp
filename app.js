@@ -14,6 +14,7 @@ const qpsRoutes = require('./routes/qps');
 const qpRoutes = require('./routes/qp');
 const qpdetailRoutes = require('./routes/qpdetails');
 const testRoutes = require('./routes/test');
+const methodOverride = require('method-override');
 const users = [];
 const initializePassport = require('./passport-config.js');
 initializePassport(
@@ -67,11 +68,11 @@ app.post('/adminregister', async (req,res)=>{
             email: req.body.email,
             password: hashedPassword
         })
+        console.log(users);
         res.redirect('/adminlogin')
     }catch{
         res.redirect('/adminregister')
     }
-    console.log(users);
 })
 
 
@@ -80,10 +81,29 @@ app.get('/adminlogin', (req,res)=>{
 })
 
 app.post('/adminlogin', passport.authenticate('local',{
-    successRedirect: '/qpcreate',
+    successRedirect: '/',
     failureRedirect: '/adminlogin',
     failureFlash: true
 }))
+
+app.delete('/logout', (req, res)=>{
+    req.logout();
+    req.redirect('/adminlogin');
+})
+
+function checkAuthenticated(req, res, next){
+    if(req.isAuthenticated()){
+        return next();
+    }
+    res.redirect('/adminlogin');
+}
+
+function checkNotAuthenticated(req, res, next){
+    if(req.isAuthenticated()){
+        return res.redirect('/')
+    }
+    next();
+}
 
 app.listen(3000, ()=> {
     console.log("Port running at port 3000");
