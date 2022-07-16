@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf">
+        <link rel="icon" size="5px" href="favicon-32x32.png">
+        <script src="https://cdn.tailwindcss.com/"></script>
+        <title>
+            Admin login
+        </title>
+    </head>
+    <body>
+        <div>
+            <form action="/adminlogin" method="post">
+            <p class="studentlogin">ADMIN LOGIN</p>   
+                <input class="takeinput " type="email" name="EmailID" placeholder="Email ID"><br>
+                <input class="takeinput " type="password" name="password" placeholder="Password"><br>
+                <% if (messages.error){ %>
+                    <%= messages.error %>
+                <% } %>
+                <button class="signinbutton  bg-lime-500 w-24" type="submit">Login</button>
+            </form>
+        </div>
+    </body>
+</html>
