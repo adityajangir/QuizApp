@@ -11,9 +11,9 @@ router.get('/test/:qpname', (req, res)=>{
     res.render('testlog', {testname: req.params.qpname});
 })
 
-router.post('/verifyuser', async (req, res)=>{
+router.post('/:qpname/verifyuser', async (req, res)=>{
     // console.log(req.body);
-    Tuserinfo.findOne({userid: req.body.userid}, async (err, docs)=>{
+    Tuserinfo.findOne({testname: req.params.qpname, userid: req.body.userid}, async (err, docs)=>{
         if(err){
             console.log(err);
             // res.redirect(`/test/${req.body.testname}`);
@@ -71,18 +71,25 @@ router.post('/storeans',async (req, res)=>{
 })
 
 router.get('/:qpname/:userid/complete', (req, res)=>{
-    qpname = req.params.qpname;
-    userid = req.params.userid;
+    const qpname = req.params.qpname;
+    const userid = req.params.userid;
     // let data = [];
     Ainfo.find({qpname, userid}, (err, docs)=>{
         if(err){
             console.log(err);
         }else{
-            console.log(docs);
+            // console.log(docs);
             let score = 0;
             for(a in docs){
                 score += docs[a].score;
             }
+            Tuserinfo.findOneAndUpdate({userid}, {$set: { totalscore: score }}, {upsert: true}, function(err, docsx){
+                if(err){
+                    console.log(err);
+                }else{
+                    console.log(docsx);
+                }
+            })
             res.render('finish', {score});
         }
     })
