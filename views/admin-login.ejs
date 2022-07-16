@@ -10,15 +10,34 @@
     </head>
     <body>
         <div>
-            <form action="/adminlogin" method="post">
-            <p class="studentlogin">ADMIN LOGIN</p>   
-                <input class="takeinput " type="email" name="EmailID" placeholder="Email ID"><br>
-                <input class="takeinput " type="password" name="password" placeholder="Password"><br>
-                <% if (messages.error){ %>
-                    <%= messages.error %>
-                <% } %>
-                <button class="signinbutton  bg-lime-500 w-24" type="submit">Login</button>
-            </form>
+            <div >
+                <header class="h-24 content-center bg-[#0B4619] p-8">
+                    <div>
+                        <span class=" font-extrabold m-8 bg-clip-text text-transparent text-5xl bg-gradient-to-r from-pink-500 to-violet-500">
+                            QUIZZELA
+                        </span>
+                    </div>
+                </header>
+            </div>
+            <div class="p-5 flex w-screen h-screen justify-center items-center bg-[#116530]">  
+                <div class="w-max bg-white h-max rounded-xl  flex flex-col justify-center p-10 bg-[#D3E4CD]">         
+                    <form action="/adminlogin" method="post">
+                        <div class="w-full font-bold text-center p-4 text-[#064635] font-bold text-2xl underline">ADMIN LOGIN</div>
+                        <div class="w-full p-4">
+                        <input class=" bg-[#C1DEAE] border-solid border-2 border-lime-600 w-full p-2 rounded-md placeholder-[#406343]" type="email" name="EmailID" placeholder="Email ID"><br>
+                        </div>
+                        <div class="w-full p-4">
+                        <input class=" bg-[#C1DEAE] border-solid border-2 border-lime-600 w-full p-2 rounded-md placeholder-[#406343]" type="password" name="password" placeholder="Password"><br>
+                        </div>
+                        <% if (messages.error){ %>
+                            <%= messages.error %>
+                        <% } %>
+                        <div class="w-full p-4 flex justify-center">
+                            <button class="text-white ring-2 ring-[#9A86A4] rounded-lg h-10 w-32 transition ease-in-out delay-150 bg-[#7D1E6A] hover:-translate-y-1 hover:scale-110 hover:bg-[#46244C] duration-300" type="submit">Proceed</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
     </body>
 </html>

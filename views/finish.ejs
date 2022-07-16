@@ -4,9 +4,23 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
     <title>Thank You</title>
 </head>
-<body>
-    <h1>Your Score is <%= score %></h1>
+<body class="bg-[#116530]">
+    <div  >
+        <header class="h-24 content-center bg-[#0B4619] p-8">
+            <div>
+                <span class=" font-extrabold m-8 bg-clip-text text-transparent text-5xl bg-gradient-to-r from-pink-500 to-violet-500">
+                    QUIZZELA
+                </span>
+            </div>
+        </header>
+    </div>
+    <div class="flex items-center justify-center">
+    <div class=" m-8 font-bold p-8 text-6xl w-fit rounded-lg backdrop-opacity-10 backdrop-invert bg-white/30  bg-clip-text text-transparent  bg-gradient-to-r from-pink-500 to-violet-500 ">
+    <h1>Your score is <%= score %>!!!!</h1>
+    </div>
+</div>
 </body>
 </html>
