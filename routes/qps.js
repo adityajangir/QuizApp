@@ -50,4 +50,16 @@ router.get('/edit/:id', (req, res)=>{
     // res.redirect('/qps')
 })
 
+router.post('/updateqp', (req, res)=>{
+    const qpname = req.body.qpname;
+    Qpinfo.findOneAndDelete({qpname}, (err, docs)=>{
+        if(err){
+            console.log(err);
+        }else{
+            const data = Qpinfo.create(req.body);
+            res.redirect('/qps')
+        }
+    })
+})
+
 module.exports = router;
