@@ -3,53 +3,65 @@
 <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <link rel="icon" href="\favicon-32x32.png">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <title>Test</title>
 </head>
-<body class="p-0 m-0 h-screen flex flex-col items-center">
-    <div class="flex flex-row h-16 bg-orange-600 w-screen justify-between">
-        <div>User Id &nbsp; <%= userid %></div>
-        <div>Timer: &nbsp; <span id="overallTimer" class="m-4"></span></div>
-    </div>
-    <div class="w-5/6 h-full p-4 rounded-md bg-slate-200 justify-center">
-        <div>
+<body class="bg-[#116530]">
+    <div >
+        <header class="h-24 content-center bg-[#0B4619] p-8">
             <div>
+                <span class=" font-extrabold m-8 bg-clip-text text-transparent text-5xl bg-gradient-to-r from-pink-500 to-violet-500">
+                    QUIZZELA
+                </span>
+            </div>
+        </header>
+    </div>
+    <div class="flex flex-row h-16 justify-between ml-8 m-8">
+        <div class="p-1 text-gray-300 font-semibold bg-indigo-500 text-lg h-max w-max flex items-center justify-center rounded-lg bg-[#D3E4CD] text-[#064635]">User ID: &nbsp; <%= userid %></div>
+        <div class=" p-1 text-gray-300 font-bold bg-indigo-500 text-lg h-10 w-48 flex items-center justify-center rounded-lg bg-[#D3E4CD] text-[#064635]">Timer: &nbsp; <span id="overallTimer" class="m-4"></span></div>
+    </div>
+    <div class="flex items-center justify-center">
+    <div class="text-gray-300 font-semibold bg-indigo-500 text-lg h-max w-2/3 rounded-lg bg-[#D3E4CD] text-[#064635] " >
+        <div >
+            <div class="ml-8 mt-6 font-bold">
                 Quesiton Time: <span id="questionTimer"></span>
             </div>
-            <div>
+            <div class="ml-8 mt-6">
                 Question: <span id="questionno"></span><div id="questionbox"></div>
             </div>
-            <div>
-                Total Time: <div id="marksbox"></div>
+            <div class="ml-8 mt-6">
+                Total Time: <span id="marksbox"></span>
             </div>
-            <div>
-                Total Marks: <div id="timebox"></div>
+            <div class="ml-8 mt-6">
+                Total Marks: <span id="timebox"></span>
             </div>
-            <div id="optionbox">
+            <div class="ml-8 mt-6" id="optionbox">
                 <div>
-                    <p>Please select any of the options:</p>
-                    <input type="radio" id="" name="abcd" value="a">
+                    <p >Please select any of the options:</p>
+                    <input type="radio" id="" name="abcd" value="a" class="accent-[#7D1E6A]">
                     <label for="">&nbsp; a</label><br>
-                    <input type="radio" id="" name="abcd" value="b">
+                    <input type="radio" id="" name="abcd" value="b" class="accent-[#7D1E6A]">
                     <label for="">&nbsp; b</label><br>  
-                    <input type="radio" id="" name="abcd" value="c">
+                    <input type="radio" id="" name="abcd" value="c" class="accent-[#7D1E6A]">
                     <label for="">&nbsp; c</label><br>
-                    <input type="radio" id="" name="abcd" value="d">
+                    <input type="radio" id="" name="abcd" value="d" class="accent-[#7D1E6A]">
                     <label for="">&nbsp; d</label><br>
-                    <input type="radio" id="" name="abcd" value="none" checked>
-                    <label for="" >&nbsp; None</label><br><br>
+                    <input type="radio" id=""  class="accent-[#7D1E6A]" name="abcd" value="none" checked>
+                    <label for="">&nbsp; None</label><br><br>
                 </div>
             </div>
-            <div id="descriptionbox">
-                Answer: &nbsp; <textarea name="" id="wans" cols="100" rows="10"></textarea>
+            <div class="ml-8 mt-6" id="descriptionbox">
+                Answer: &nbsp; <textarea class="  rounded-md bg-[#C1DEAE] border-solid border-2 border-lime-600  resize-none h-16 w-96 ml-8 mt-6 mr-8" name="" id="wans" cols="100" rows="10"></textarea>
             </div>
-            <div>
-                <button class="p-2 m-2 bg-orange-600 text-white rounded-md" onclick="proceed()">Submit and Proceed</button>
+            <div class="flex items-center justify-center">
+                <button class=" mt-6 mb-8 text-white ring-2 ring-[#9A86A4] rounded-lg h-10 w-48 transition ease-in-out delay-150 bg-[#7D1E6A] hover:-translate-y-1 hover:scale-110 hover:bg-[#46244C] duration-300" onclick="proceed()">Submit and Proceed</button>
             </div>
         </div>
     </div>
+</div>
     <script>
         let data = `<%- docs %>`;
         let userid = `<%- userid %>`;
