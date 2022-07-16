@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const {Schema} = mongoose;
 
 const tuserSchema = new mongoose.Schema({
     testuser:{
@@ -10,6 +11,7 @@ const tuserSchema = new mongoose.Schema({
     testname:{
         type: String,
     },
+    solution: [{ type: Schema.Types.ObjectId, ref: 'Story' }],
 })
 
 const Tuserinfo = mongoose.model('tuserinfo',tuserSchema)

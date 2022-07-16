@@ -4,9 +4,128 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
     <title>Test</title>
 </head>
-<body>
-    <h1>The test will start here</h1>
+<body class="p-0 m-0 h-screen flex flex-col items-center">
+    <div class="flex flex-row h-16 bg-orange-600 w-screen">
+        <div>User Id &nbsp; <%= userid %></div>
+    </div>
+    <div class="w-5/6 h-full p-4 rounded-md bg-slate-200 justify-center">
+        <div>
+            <div>
+                Question: <div id="questionbox"></div>
+            </div>
+            <div>
+                Total Time: <div id="marksbox"></div>
+            </div>
+            <div>
+                Total Marks: <div id="timebox"></div>
+            </div>
+            <div id="optionbox">
+                Answer: 
+                <div>
+                    <p>Please select any of the options:</p>
+                    <input type="radio" id="" name="abcd" value="a">
+                    <label for="">&nbsp; a</label><br>
+                    <input type="radio" id="" name="abcd" value="b">
+                    <label for="">&nbsp; b</label><br>  
+                    <input type="radio" id="" name="abcd" value="c">
+                    <label for="">&nbsp; c</label><br>
+                    <input type="radio" id="" name="abcd" value="d">
+                    <label for="">&nbsp; d</label><br>
+                    <input type="radio" id="" name="abcd" value="none" checked>
+                    <label for="" >&nbsp; None</label><br><br>
+                </div>
+            </div>
+            <div id="descriptionbox">
+                Answer: &nbsp; <textarea name="" id="wans" cols="100" rows="10"></textarea>
+            </div>
+            <div>
+                <button class="p-2 m-2 bg-orange-600 text-white rounded-md" onclick="proceed()">Submit and Proceed</button>
+            </div>
+        </div>
+    </div>
+    <script>
+        let data = `<%- docs %>`;
+        let userid = `<%- userid %>`;
+        data = JSON.parse(data);
+        let i = 0;
+        const quesbox = document.getElementById('questionbox');
+        const timebox = document.getElementById('timebox');
+        const marksbox = document.getElementById('marksbox');
+
+        window.addEventListener('load', ()=>{
+            if(data[0].type=="MCQ"){
+                $("#descriptionbox").hide();
+                $("#optionbox").show();
+            }else{
+                $("#optionbox").hide();
+                $("#descriptionbox").show();
+            }
+            quesbox.innerHTML = data[i].question;
+            timebox.innerHTML = data[i].qtime;
+            marksbox.innerHTML = data[i].marks;
+            // i++;
+        });
+
+        function calcans (i){
+
+        }
+
+        function sendans(ans){
+            const ansdata = { answer: ans, qpname: data[i].qpname, questionid: data[i]._id, userid };
+            fetch('/storeans', {
+            method: 'POST', 
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(ansdata),
+            })
+            .then(response => response.json())
+            .then(data => {
+            console.log('Success:', data);
+            })
+            .catch((error) => {
+            console.error('Error:', error);
+            });
+
+        }
+
+        function proceed(){
+            let ans = "";
+            if(data[i].type=="MCQ"){
+                var optionChosen = document.querySelector('input[name = abcd]:checked').value;
+                ans = optionChosen;
+            }else{
+                var wans = document.getElementById('wans').value;
+                ans = wans;
+            }
+            sendans(ans);
+            console.log(ans);
+            if(i==data.length-1){
+                alert("test complete");
+                window.location = '/' + data[0].qpname+ '/'+ userid + '/complete';
+            }
+            i++;
+            quesbox.innerHTML = data[i].question;
+            timebox.innerHTML = data[i].qtime;
+            marksbox.innerHTML = data[i].marks;
+            document.getElementById('wans').value = "";
+            if(data[i].type=="MCQ"){
+                $("#descriptionbox").hide();
+                $("#optionbox").show();
+            }else{
+                $("#optionbox").hide();
+                $("#descriptionbox").show();
+            }
+            
+        }
+        
+        // data.forEach(doc => {
+        //     console.log(doc)
+        // });
+    </script>
 </body>
 </html>
