@@ -12,6 +12,9 @@ const aschema = new mongoose.Schema({
     },
     userid: {
         type: String,
+    }, 
+    score: {
+        type: Number,
     }
 })
 

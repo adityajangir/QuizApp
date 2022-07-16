@@ -5,6 +5,7 @@ const Tuserinfo = require('../models/tuser');
 const Qinfo = require('../models/questiondb');
 const { json } = require('body-parser');
 const Ainfo = require('../models/answers');
+const Qpinfo = require('../models/qpdb');
 
 router.get('/test/:qpname', (req, res)=>{
     res.render('testlog', {testname: req.params.qpname});
@@ -30,46 +31,62 @@ router.post('/verifyuser', async (req, res)=>{
 
 router.get('/test/:testname/:userid',  (req, res)=>{
     const userid = req.params.userid;
-    Qinfo.find({qpname: req.params.testname}, (err, docs)=>{
+    var totalTime = 0;
+    Qpinfo.findOne({name: req.params.testname}, (err,docs)=>{
         if(err){
             console.log(err);
         }else{
-            docs = JSON.parse(JSON.stringify(docs))
-            res.render('quiz', {docs: JSON.stringify(docs), userid});
+            totalTime += docs.totaltime;
+            Qinfo.find({qpname: req.params.testname}, (err, docs1)=>{
+                if(err){
+                    console.log(err);
+                }else{
+                    docs1 = JSON.parse(JSON.stringify(docs1))
+                    res.render('quiz', {docs: JSON.stringify(docs1), userid, totalTime});
+                }
+            })
         }
     })
 })
 
 router.post('/storeans',async (req, res)=>{
-    const ansdata = await Ainfo.create(req.body);
+    const ans = req.body.answer;
+    Qinfo.findById(req.body.questionid, async (err, docs)=>{
+        if(err){
+            console.log(err);
+        }else{
+            // console.log(ans, docs.answer);
+
+            if(docs.answer == ans){
+                const score = docs.marks;
+                const ansdata = await Ainfo.create({...req.body, score});
+            }else{
+                const score = 0;
+                const ansdata = await Ainfo.create({...req.body, score});
+                // console.log(ansdata);
+            }
+        }
+    })
     // console.log(ansdata);
 })
 
 router.get('/:qpname/:userid/complete', (req, res)=>{
     qpname = req.params.qpname;
     userid = req.params.userid;
+    // let data = [];
     Ainfo.find({qpname, userid}, (err, docs)=>{
         if(err){
             console.log(err);
         }else{
+            console.log(docs);
             let score = 0;
             for(a in docs){
-                const questionid = docs[a].quesitonid;
-                Qinfo.findOne({questionid}, (err, docs1)=>{
-                    if(err){
-                        console.log(err);
-                    }else{
-                        console.log(docs[a].answer, docs1.answer)
-                        if(docs[a].answer == docs1.answer){
-                            score += docs1.marks;
-                        }
-                        console.log(score);
-                        // console.log(docs1);
-                    }
-                })
+                score += docs[a].score;
             }
+            res.render('finish', {score});
         }
     })
+    // console.log(data);
 })
 
 module.exports = router;

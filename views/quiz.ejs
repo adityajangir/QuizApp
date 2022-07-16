@@ -9,13 +9,17 @@
     <title>Test</title>
 </head>
 <body class="p-0 m-0 h-screen flex flex-col items-center">
-    <div class="flex flex-row h-16 bg-orange-600 w-screen">
+    <div class="flex flex-row h-16 bg-orange-600 w-screen justify-between">
         <div>User Id &nbsp; <%= userid %></div>
+        <div>Timer: &nbsp; <span id="overallTimer" class="m-4"></span></div>
     </div>
     <div class="w-5/6 h-full p-4 rounded-md bg-slate-200 justify-center">
         <div>
             <div>
-                Question: <div id="questionbox"></div>
+                Quesiton Time: <span id="questionTimer"></span>
+            </div>
+            <div>
+                Question: <span id="questionno"></span><div id="questionbox"></div>
             </div>
             <div>
                 Total Time: <div id="marksbox"></div>
@@ -24,7 +28,6 @@
                 Total Marks: <div id="timebox"></div>
             </div>
             <div id="optionbox">
-                Answer: 
                 <div>
                     <p>Please select any of the options:</p>
                     <input type="radio" id="" name="abcd" value="a">
@@ -55,6 +58,7 @@
         const quesbox = document.getElementById('questionbox');
         const timebox = document.getElementById('timebox');
         const marksbox = document.getElementById('marksbox');
+        const questionno = document.getElementById('questionno');
 
         window.addEventListener('load', ()=>{
             if(data[0].type=="MCQ"){
@@ -67,12 +71,9 @@
             quesbox.innerHTML = data[i].question;
             timebox.innerHTML = data[i].qtime;
             marksbox.innerHTML = data[i].marks;
-            // i++;
+            questionno.innerHTML = i+1;
         });
 
-        function calcans (i){
-
-        }
 
         function sendans(ans){
             const ansdata = { answer: ans, qpname: data[i].qpname, questionid: data[i]._id, userid };
@@ -109,6 +110,7 @@
                 window.location = '/' + data[0].qpname+ '/'+ userid + '/complete';
             }
             i++;
+            questionno.innerHTML = i+1;
             quesbox.innerHTML = data[i].question;
             timebox.innerHTML = data[i].qtime;
             marksbox.innerHTML = data[i].marks;
@@ -120,12 +122,52 @@
                 $("#optionbox").hide();
                 $("#descriptionbox").show();
             }
+
+            //setting timer after every proceed
+            qtime = data[i].qtime*60;
             
         }
+
+        let stime = `<%= totalTime %>`;
+        time = stime*60;
+        setInterval(updateCountDown, 1000);
+        function updateCountDown(){
+            const minutes = Math.floor(time/60);
+            const seconds = time%60;
+            if(minutes==0 && seconds==0){
+                window.location = '/' + data[0].qpname+ '/'+ userid + '/complete';
+            }
+            if(seconds<10){
+                cseconds = '0'+seconds;
+            }else{
+                cseconds = seconds;
+            }
+
+            document.getElementById('overallTimer').innerHTML = `${minutes} : ${cseconds}`;
+            time--;
+        }
+
+        let qstime = data[i].qtime;
+        qtime = qstime*60;
+        setInterval(qupdateCountDown, 1000);
+        function qupdateCountDown(){
+            const minutes = Math.floor(qtime/60);
+            const seconds = qtime%60;
+            if(minutes==0 && seconds==0){
+                proceed();
+            }
+            if(seconds<10){
+                cseconds = '0'+seconds;
+            }else{
+                cseconds = seconds;
+            }
+
+            document.getElementById('questionTimer').innerHTML = `${minutes} : ${cseconds}`;
+            qtime--;
+        }
+
+
         
-        // data.forEach(doc => {
-        //     console.log(doc)
-        // });
     </script>
 </body>
 </html>
