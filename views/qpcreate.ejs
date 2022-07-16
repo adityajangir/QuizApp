@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New QP</title>
+</head>
+<body>
+    <div>
+        <% if(update){ %>
+            <form action="/updateqp" method="post">
+                <label for="">Name of qp:</label>
+                <input name="name" type="text" value="<%= qpdata.name %>"><br>
+                <label for="">Time of qp:</label>
+                <input name="totaltime" type="number" value="<%= qpdata.totaltime %>"><br>
+                <label for="">Discription for qp</label>
+                <textarea name="description" id="" cols="30" rows="10"><%= qpdata.description %></textarea><br>
+                <button>Submit</button>
+            </form>
+        <% }else{ %>
+        <form action="/addqp" method="post">
+            <label for="">Name of qp:</label>
+            <input name="name" type="text"><br>
+            <label for="">Time of qp:</label>
+            <input name="totaltime" type="number"><br>
+            <label for="">Discription for qp</label>
+            <textarea name="description" id="" cols="30" rows="10"></textarea><br>
+            <button>Submit</button>
+        </form>
+        <% } %>
+    </div>
+</body>
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Test</title>
+</head>
+<body class="m-0 p-0 h-screen">
+    <div class="flex w-screen h-screen justify-center items-center bg-slate-200">
+        <div class="w-1/4 bg-white h-2/3 rounded-md border-2 border-black flex flex-col justify-center p-10">
+            <div class="w-full font-bold text-center p-4">Test Verification</div>
+            <form action="/verifyuser" method="post">
+                <div class="w-full p-4">
+                    <input class="w-full p-2 border-gray-800 border-2" type="text" name="testuser" id="" placeholder="Enter Your Name">
+                </div>
+                <div class="w-full p-4">
+                    <input class="w-full p-2 border-gray-800 border-2" type="text" name="userid" id="" placeholder="Enter Your Id">
+                </div>
+                <div class="w-full p-4">
+                    <input class="w-full p-2 border-gray-800 border-2" type="text" name="testname" id="" value="<%= testname %>">
+                </div>
+                <div class="w-full p-4 flex justify-center">
+                    <button class="bg-green-600 text-white p-2 m-2 rounded-md" type="submit">Proceed</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

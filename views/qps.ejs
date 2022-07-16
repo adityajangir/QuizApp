@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Question Papers</title>
+</head>
+<body>
+    <button onclick="window.location = '/qpcreate'">Add question paper</button>
+    <% qps.forEach(function(qp){ %>
+        <div>
+            <div>
+                Name: <%= qp.name %>
+            </div>
+            <div>
+                Time: <%= qp.totaltime %>
+            </div>
+            <div>
+                Description: <%= qp.description %>
+            </div>
+            <button onclick="window.location = '/edit/'+ `<%=qp._id%>` ;">Edit qp info</button>
+            <button onclick="window.location = '/qp/'+`<%= qp.name %>` ;">Edit</button>
+            <button onclick="window.location = '/delete/'+ `<%=qp._id%>` ;">Delete</button>
+        </div><br>
+    <% }) %>
+    
+</body>
+</html>
