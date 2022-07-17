@@ -53,7 +53,7 @@ mongoose.connect(mongodbUri,{
 }).then(result => console.log("Connected to the database"))
 .catch(error => console.log(error))
 
-app.get('/', checkAuthenticated,  (req, res)=>{
+app.get('/',  (req, res)=>{
     res.render('homepage');
 })
 
@@ -83,7 +83,7 @@ app.get('/adminlogin', checkNotAuthenticated, (req,res)=>{
 })
 
 app.post('/adminlogin', passport.authenticate('local',{
-    successRedirect: '/',
+    successRedirect: '/qps',
     failureRedirect: '/adminlogin',
     failureFlash: true
 }))
