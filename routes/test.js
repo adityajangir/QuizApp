@@ -13,40 +13,58 @@ router.get('/test/:qpname', (req, res)=>{
 
 router.post('/:qpname/verifyuser', async (req, res)=>{
     // console.log(req.body);
-    Tuserinfo.findOne({testname: req.params.qpname, userid: req.body.userid}, async (err, docs)=>{
+    const uniqueId = uuidV4();
+    const quespname = req.params.qpname;
+    // console.log(uniqueId);
+    res.redirect(`/test/${req.params.qpname}/${uniqueId}/${req.body.testuser}`);
+    // Tuserinfo.findOne({testname: req.params.qpname, userid: uniqueId}, async (err, docs)=>{
+    //     if(err){
+    //         console.log(err);
+    //         // res.redirect(`/test/${req.body.testname}`);
+    //     }else{
+    //         if(!docs){
+    //             const quespname = req.params.qpname;
+    //             const data = await Tuserinfo.create({testname: quespname, userid: uniqueId});
+    //             // console.log(data);
+    //             res.redirect(`/test/${data.testname}/${data.userid}`);
+    //         }else{
+    //             res.redirect(`/test/${req.body.testname}`);
+    //         }
+    //     }
+    // })
+})
+
+router.get('/test/:testname/:userid/:testuser',  (req, res)=>{
+    Tuserinfo.find({userid: req.params.userid}, async (err, docs3)=>{
         if(err){
             console.log(err);
-            // res.redirect(`/test/${req.body.testname}`);
         }else{
-            if(!docs){
-                const data = await Tuserinfo.create(req.body)
-                // console.log(data);
-                res.redirect(`/test/${data.testname}/${data.userid}`);
+            // console.log(docs3);
+            if(!docs3.length){
+                const data = await Tuserinfo.create({testname: req.params.testname, userid: req.params.userid, testuser: req.params.testuser});
+                Qpinfo.findOne({name: req.params.testname}, (err,docs)=>{
+                    if(err){
+                        console.log(err);
+                    }else{
+                        totalTime += docs.totaltime;
+                        Qinfo.find({qpname: req.params.testname}, (err, docs1)=>{
+                            if(err){
+                                console.log(err);
+                            }else{
+                                docs1 = JSON.parse(JSON.stringify(docs1))
+                                res.render('quiz', {docs: JSON.stringify(docs1), userid, totalTime});
+                            }
+                        })
+                    }
+                })
             }else{
-                res.redirect(`/test/${req.body.testname}`);
+                res.redirect(`/${req.params.testname}/${req.params.userid}/complete`);
             }
         }
     })
-})
-
-router.get('/test/:testname/:userid',  (req, res)=>{
     const userid = req.params.userid;
     var totalTime = 0;
-    Qpinfo.findOne({name: req.params.testname}, (err,docs)=>{
-        if(err){
-            console.log(err);
-        }else{
-            totalTime += docs.totaltime;
-            Qinfo.find({qpname: req.params.testname}, (err, docs1)=>{
-                if(err){
-                    console.log(err);
-                }else{
-                    docs1 = JSON.parse(JSON.stringify(docs1))
-                    res.render('quiz', {docs: JSON.stringify(docs1), userid, totalTime});
-                }
-            })
-        }
-    })
+    
 })
 
 router.post('/storeans',async (req, res)=>{

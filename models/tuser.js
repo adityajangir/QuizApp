@@ -6,7 +6,7 @@ const tuserSchema = new mongoose.Schema({
         type: String,
     },
     userid:{
-        type: Number,
+        type: String,
     },
     testname:{
         type: String,
