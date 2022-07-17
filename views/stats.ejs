@@ -7,18 +7,29 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <title>Stats</title>
 </head>
-<body class="p-0 m-0 flex flex-col h-full bg-green-600">
-    <div class="text-2xl m-2 p-2">Participants</div>
-    <div class="grid grid-cols-4">
+<body class="bg-[#116530]">
+    <div>
+        <header class="h-24 content-center bg-[#0B4619] p-8">
+            <div class="font-extrabold">
+                <span class="m-8 bg-clip-text text-transparent text-5xl bg-gradient-to-r from-pink-500 to-violet-500">
+                    QUIZZELA
+                </span>
+            </div>
+        </header>
+    </div>
+    <div class="p-5 flex justify-center items-center bg-[#116530]">
+    <div class=" p-4 text-gray-300 font-bold bg-indigo-500 text-4xl h-max w-max flex items-center justify-center rounded-lg bg-[#D3E4CD] text-[#064635]">SCOREBOARD</div>
+    </div>
+
+    <div class="flex justify-center items-center ">
+        <div class="grid grid-cols-1 space-y-4">
         <% docs.forEach(doc => { %>
-            <div class="flex flex-col bg-lime-200 p-3 m-2 rounded-md justify-center text-center">
-                <div class="border-b-2 border-green-600"><%= doc.testuser %></div>
-                <div><%= doc.totalscore %></div>
+            <div class=" h-max  w-96 text-[#406343] bg-[#C1DEAE] border-solid border-2 border-lime-600 p-5 rounded-md">
+                <div class="flex justify-center items-center text-3xl font-semibold"><%= doc.testuser %> : <%= doc.totalscore %></div>
             </div>
         <% }) %>
     </div>
-    <div>
-
+    </div>
     </div>
 </body>
 </html>
