@@ -90,6 +90,13 @@ router.get('/:qpname/:userid/complete', (req, res)=>{
                     console.log(docsx);
                 }
             })
+            // Tuserinfo.findOne({userid}, (err, docs)=>{
+            //     if(err){
+            //         console.log(err);
+            //     }else{
+            //         console.log(docs);
+            //     }
+            // })
             res.render('finish', {score});
         }
     })

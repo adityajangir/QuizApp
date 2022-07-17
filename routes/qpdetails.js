@@ -96,8 +96,4 @@ router.post('/addquestion', async (req, res)=> {
     res.redirect('/qp/' + qdata.qpname);
 })
 
-router.get('/qp/:qpname/stats', (req, res)=>{
-    res.render('stats');
-})
-
 module.exports = router;

@@ -13,6 +13,7 @@ const session = require('express-session');
 const qpsRoutes = require('./routes/qps');
 const qpRoutes = require('./routes/qp');
 const qpdetailRoutes = require('./routes/qpdetails');
+const statsRoutes = require('./routes/stats');
 const testRoutes = require('./routes/test');
 const methodOverride = require('method-override');
 const users = [];
@@ -41,6 +42,7 @@ app.use(qpsRoutes);
 app.use(qpRoutes);
 app.use(qpdetailRoutes);
 app.use(testRoutes);
+app.use(statsRoutes);
 
 const mongodbUri = "mongodb+srv://araj:araj@cluster0.flwcc.mongodb.net/?retryWrites=true&w=majority";
 
@@ -51,11 +53,11 @@ mongoose.connect(mongodbUri,{
 }).then(result => console.log("Connected to the database"))
 .catch(error => console.log(error))
 
-app.get('/', (req, res)=>{
+app.get('/', checkAuthenticated,  (req, res)=>{
     res.render('homepage');
 })
 
-app.get('/adminregister', (req,res)=>{
+app.get('/adminregister', checkNotAuthenticated, (req,res)=>{
     res.render('admin-register');
 })
 
@@ -68,7 +70,7 @@ app.post('/adminregister', async (req,res)=>{
             email: req.body.email,
             password: hashedPassword
         })
-        console.log(users);
+        // console.log(users);
         res.redirect('/adminlogin')
     }catch{
         res.redirect('/adminregister')
@@ -76,7 +78,7 @@ app.post('/adminregister', async (req,res)=>{
 })
 
 
-app.get('/adminlogin', (req,res)=>{
+app.get('/adminlogin', checkNotAuthenticated, (req,res)=>{
     res.render('admin-login')
 })
 
