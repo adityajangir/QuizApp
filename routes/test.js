@@ -72,35 +72,29 @@ router.post('/storeans',async (req, res)=>{
 
 router.get('/:qpname/:userid/complete', (req, res)=>{
     const qpname = req.params.qpname;
-    const userid = req.params.userid;
+    const userid1 = req.params.userid;
     // let data = [];
-    Ainfo.find({qpname, userid}, (err, docs)=>{
+    Ainfo.find({qpname, userid: userid1}, (err, docs)=>{
         if(err){
             console.log(err);
         }else{
             // console.log(docs);
             let score = 0;
+            // console.log(docs);
             for(a in docs){
                 score += docs[a].score;
+                // console.log(score);
             }
-            Tuserinfo.findOneAndUpdate({userid}, {$set: { totalscore: score }}, {upsert: true}, function(err, docsx){
+            Tuserinfo.findOneAndUpdate({userid: userid1, testname: qpname}, {$set: { totalscore: score }}, {upsert: false}, function(err, docsx){
                 if(err){
                     console.log(err);
                 }else{
-                    console.log(docsx);
+                    // console.log(docsx);
                 }
             })
-            // Tuserinfo.findOne({userid}, (err, docs)=>{
-            //     if(err){
-            //         console.log(err);
-            //     }else{
-            //         console.log(docs);
-            //     }
-            // })
             res.render('finish', {score});
         }
     })
-    // console.log(data);
 })
 
 module.exports = router;

@@ -7,15 +7,15 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <title>Stats</title>
 </head>
-<body class="p-0 m-0 flex h-full bg-green-600">
+<body class="p-0 m-0 flex flex-col h-full bg-green-600">
+    <div class="text-2xl m-2 p-2">Participants</div>
     <div class="grid grid-cols-4">
-        <div class="flex flex-col bg-lime-200 p-3 m-2 rounded-md justify-center text-center">
-            <div class="border-b-2 border-green-600">Question Name</div>
-            <div>Average</div>
-            <div>
-                <span class="border-r-2 border-green-600">Correct</span><span>Incorrect</span>
+        <% docs.forEach(doc => { %>
+            <div class="flex flex-col bg-lime-200 p-3 m-2 rounded-md justify-center text-center">
+                <div class="border-b-2 border-green-600"><%= doc.testuser %></div>
+                <div><%= doc.totalscore %></div>
             </div>
-        </div>
+        <% }) %>
     </div>
     <div>
 
