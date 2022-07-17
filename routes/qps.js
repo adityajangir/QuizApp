@@ -3,7 +3,22 @@ const router = express.Router();
 const Qpinfo = require('../models/qpdb');
 
 
-router.get('/qps', (req, res)=> {
+function checkAuthenticated(req, res, next){
+    if(req.isAuthenticated()){
+        return next();
+    }
+    res.redirect('/adminlogin');
+}
+
+function checkNotAuthenticated(req, res, next){
+    if(req.isAuthenticated()){
+        return res.redirect('/')
+    }
+    next();
+}
+
+
+router.get('/qps', checkAuthenticated, (req, res)=> {
     Qpinfo.find({}, (err, docs)=>{
         if(err){
             console.log(err);
@@ -14,7 +29,7 @@ router.get('/qps', (req, res)=> {
     })
 })
 
-router.get('/delete/:id', (req, res)=>{
+router.get('/delete/:id', checkAuthenticated, (req, res)=>{
     console.log(req.params.id);
     const id = req.params.id;
     Qpinfo.findByIdAndDelete(id, function (err, docs) {
@@ -28,7 +43,7 @@ router.get('/delete/:id', (req, res)=>{
     res.redirect('/qps')
 })
 
-router.get('/edit/:id', (req, res)=>{
+router.get('/edit/:id', checkAuthenticated, (req, res)=>{
     console.log(req.params.id);
     const id = req.params.id;
     Qpinfo.findById(id, (err, docs)=>{
@@ -50,7 +65,7 @@ router.get('/edit/:id', (req, res)=>{
     // res.redirect('/qps')
 })
 
-router.post('/updateqp', (req, res)=>{
+router.post('/updateqp', checkAuthenticated, (req, res)=>{
     const qpname = req.body.qpname;
     Qpinfo.findOneAndDelete({qpname}, (err, docs)=>{
         if(err){

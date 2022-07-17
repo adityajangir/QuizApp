@@ -4,7 +4,22 @@ const Qpinfo = require('../models/qpdb');
 const Qinfo = require('../models/questiondb')
 
 
-router.get('/qp/:name', (req, res)=>{
+function checkAuthenticated(req, res, next){
+    if(req.isAuthenticated()){
+        return next();
+    }
+    res.redirect('/adminlogin');
+}
+
+function checkNotAuthenticated(req, res, next){
+    if(req.isAuthenticated()){
+        return res.redirect('/')
+    }
+    next();
+}
+
+
+router.get('/qp/:name', checkAuthenticated, (req, res)=>{
     Qpinfo.findOne({name: req.params.name}, (err, docs) => {
         if(err){
             console.log(err);
@@ -31,7 +46,7 @@ router.get('/qp/:name', (req, res)=>{
     })
 })
 
-router.get('/qp/:qpname/:qname/delete', (req, res)=>{
+router.get('/qp/:qpname/:qname/delete', checkAuthenticated, (req, res)=>{
     Qinfo.findOneAndRemove({qpname: req.params.qpname, qname: req.params.qname}, (err, docs)=>{
         if(err){
             console.log(err);
@@ -41,7 +56,7 @@ router.get('/qp/:qpname/:qname/delete', (req, res)=>{
     })
 })
 
-router.get('/qp/:qpname/:qname/edit', (req, res)=>{
+router.get('/qp/:qpname/:qname/edit', checkAuthenticated, (req, res)=>{
     Qinfo.findOne({qpname: req.params.qpname, qname: req.params.qname}, (err, docs)=>{
         if(err){
             console.log(err);
@@ -76,7 +91,7 @@ router.get('/qp/:qpname/:qname/edit', (req, res)=>{
     })
 })
 
-router.post('/updatequestion', async (req, res)=>{
+router.post('/updatequestion', checkAuthenticated,  async (req, res)=>{
     const data = req.body;
     // console.log(data);
     Qinfo.findOneAndRemove({qpname: data.qpname, qname: data.qname}, async (err, docs)=>{
@@ -90,7 +105,7 @@ router.post('/updatequestion', async (req, res)=>{
     })
 })
 
-router.post('/addquestion', async (req, res)=> {
+router.post('/addquestion', checkAuthenticated, async (req, res)=> {
     // console.log(req.body);
     const qdata = await Qinfo.create(req.body);
     res.redirect('/qp/' + qdata.qpname);

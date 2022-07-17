@@ -52,6 +52,10 @@ router.get('/test/:testname/:userid/:testuser',  (req, res)=>{
                                 console.log(err);
                             }else{
                                 docs1 = JSON.parse(JSON.stringify(docs1))
+                                if(docs1.length===0){
+                                    // console.log(docs1.length);
+                                    res.redirect(`/test/${req.params.testname}`);
+                                }
                                 res.render('quiz', {docs: JSON.stringify(docs1), userid, totalTime});
                             }
                         })

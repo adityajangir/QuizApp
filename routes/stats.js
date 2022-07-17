@@ -6,7 +6,23 @@ const Tuserinfo = require('../models/tuser');
 const Ainfo = require('../models/answers');
 
 
-router.get('/qp/:qpname/stats', async (req, res)=>{
+
+function checkAuthenticated(req, res, next){
+    if(req.isAuthenticated()){
+        return next();
+    }
+    res.redirect('/adminlogin');
+}
+
+function checkNotAuthenticated(req, res, next){
+    if(req.isAuthenticated()){
+        return res.redirect('/')
+    }
+    next();
+}
+
+
+router.get('/qp/:qpname/stats', checkAuthenticated, async (req, res)=>{
     const qpname = req.params.qpname;
     const quess = await Qinfo.find({qpname});
     quess.forEach(async ques => {
